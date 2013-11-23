@@ -1,6 +1,6 @@
 <?php
 
-class VehicleController extends ERestController {
+class UserController extends ERestController {
 
     /**
      * Declares class-based actions.
@@ -23,9 +23,8 @@ class VehicleController extends ERestController {
     public function doCustomRestGetGetLocation() {
         $collections = Yii::app()->edmsMongoDB()->listCollections();
 		
-		$vehicle_id = isset($_GET['vehicle_id']) ? $_GET['vehicle_id'] : "";
+		$user_id = isset($_GET['vehicle_id']) ? $_GET['vehicle_id'] : "";
 		
-        echo CJSON::encode($list);
+        echo CJSON::encode($user_id);
     }
-
 }
