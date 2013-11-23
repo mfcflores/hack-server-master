@@ -21,11 +21,15 @@ class VehicleController extends ERestController {
         // using the default layout 'protected/views/layouts/main.php'
         $this->render('index');
     }
+    
+    public function doCustomRestGetToken() {
+        $id = new MongoId();
+        die($id);
+    }
 
     public function doCustomRestGetGetLocation() {
         $vService = new VehicleService();
         $res = $vService->getLocation($_GET);
         echo CJSON::encode($res);
     }
-
 }
