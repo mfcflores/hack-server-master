@@ -1,8 +1,6 @@
 <?php
 
-Yii::import('application.components.VehicleService');
-
-class VehicleController extends ERestController {
+class UserController extends ERestController {
 
     /**
      * Declares class-based actions.
@@ -22,14 +20,11 @@ class VehicleController extends ERestController {
         $this->render('index');
     }
 
-    public function doCustomRestGetToken() {
-        $id = new MongoId();
-        die($id);
-    }
-
     public function doCustomRestGetGetLocation() {
-        $vService = new VehicleService();
-        $res = $vService->getLocation($_GET);
-        echo CJSON::encode($res);
+        $collections = Yii::app()->edmsMongoDB()->listCollections();
+		
+		$user_id = isset($_GET['vehicle_id']) ? $_GET['vehicle_id'] : "";
+		
+        echo CJSON::encode($user_id);
     }
 }
