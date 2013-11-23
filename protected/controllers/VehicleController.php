@@ -1,5 +1,7 @@
 <?php
 
+Yii::import('application.components.VehicleService');
+
 class VehicleController extends ERestController {
 
     /**
@@ -21,8 +23,9 @@ class VehicleController extends ERestController {
     }
 
     public function doCustomRestGetGetLocation() {
-        $collections = Yii::app()->edmsMongoDB()->listCollections();
-        echo CJSON::encode(array('value' => 'test'));
+        $vService = new VehicleService();
+        $res = $vService->getLocation($_GET);
+        echo CJSON::encode($res);
     }
 
 }
