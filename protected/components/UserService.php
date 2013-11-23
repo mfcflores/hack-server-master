@@ -39,9 +39,11 @@ Class UserService extends CComponent
 		);
 		
 		$res 	= EDMSQuery::instance('services')->insert($location);
-		
-		
 	}
+    
+    public function syncData() {
+        $res = EDMSQuery::instance('vehicles')->findArray();
+    }
 }
 
 ?>

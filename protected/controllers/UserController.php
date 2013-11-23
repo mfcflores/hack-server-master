@@ -21,22 +21,21 @@ class UserController extends ERestController {
     }
 
     public function doCustomRestGetGetLocation() {
-        $UserService 	= new UserService();
-		
-		// Get Location of User from UserService Component
-		$UserLocation	= $UserService->getLocation($_GET);
-		
+        $UserService = new UserService();
+        // Get Location of User from UserService Component
+        $UserLocation = $UserService->getLocation($_GET);
         echo CJSON::encode($UserLocation);
     }
-	
-	public function doCustomRestPostSendLocation() {
-		$UserService 	= new UserService();
-		
-		$user_id	= isset($_POST['user_id']) ? $_POST['user_id'] : "";
-		$longtitude	= isset($_POST['longitude']) ? $_POST['longitude'] : "";
-		$latitude	= isset($_POST['latitude']) ? $_POST['latitude'] : "";
-		
-		$UserLocation	= $UserService->sendLocation($user_id, $longitude, $latitude);
 
-	}
+    public function doCustomRestPostSendLocation() {
+        $UserService = new UserService();
+        $user_id = isset($_POST['user_id']) ? $_POST['user_id'] : "";
+        $longitude = isset($_POST['longitude']) ? $_POST['longitude'] : "";
+        $latitude = isset($_POST['latitude']) ? $_POST['latitude'] : "";
+        $UserLocation = $UserService->sendLocation($user_id, $longitude, $latitude);
+    }
+    
+    public function doCustomRestGetSync() {
+        
+    }
 }
