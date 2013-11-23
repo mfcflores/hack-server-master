@@ -19,6 +19,7 @@ Class UserService extends CComponent {
 			
         $res = EDMSQuery::instance('user_location')->findOne(array('user_id' => $get['user_id']));
 		
+		//Check if no user was not found in database.
 		if(!$res) {
 			return false;
 		}
@@ -42,6 +43,7 @@ Class UserService extends CComponent {
      */
 
     public function sendLocation($user_id, $x, $y) {
+		//Add date time for location.
         $location = array(
             'user_id' => $user_id,
             'x' => $x,
@@ -49,8 +51,11 @@ Class UserService extends CComponent {
 			'datetime'	=> time()
         );
 
+		// Insert if no existing user_id else update if existing
         $res = EDMSQuery::instance('user_location')->upsert(array('user_id' => $user_id),$location);
 		
+		
+		// Send success true if user was updated or inserted.
 		if($res)
 		{
 			return array('success' => true, 'message' => 'Valid Parameters');
