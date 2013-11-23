@@ -2,15 +2,25 @@
 
 Class UserService extends CComponent 
 {
+	function __construct() 
+	{
+
+	}
 	/*
 	* This method gets location of user.
 	* @param user_id
 	* @return $x, $y & $datetime
 	*/
-	public function getLocation($user_id)
+	public function getLocation($get)
 	{
-	
+		if(!array_key_exists('user_id', $get)) 
+		{
+			return array('success' => false, 'message' => 'Invalid Parameters');
+		}
+
+		$res = EDMSQuery::instance('user_location')->findOne(array('_id' => new MongoId($get['user_id'])));
 		
+		return $res;
 	}
 	
 	/*
@@ -20,9 +30,17 @@ Class UserService extends CComponent
 	* @param integer $y
 	* @return boolean true or false
 	*/
-	public function sendLocation($user_id, $x, $y)
+	public function sendLocation($user_id, $latitude, $longitude)
 	{
-	
+		$location = array( 
+			'user_id' 	=> $user_id, 
+			'longitude'	=> $longitude,
+			'latitude'	=> $latitude
+		);
+		
+		$res 	= EDMSQuery::instance('services')->insert($location);
+		
+		
 	}
 }
 

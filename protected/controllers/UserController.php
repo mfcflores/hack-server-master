@@ -21,10 +21,22 @@ class UserController extends ERestController {
     }
 
     public function doCustomRestGetGetLocation() {
-        $collections = Yii::app()->edmsMongoDB()->listCollections();
+        $UserService 	= new UserService();
 		
-		$user_id = isset($_GET['vehicle_id']) ? $_GET['vehicle_id'] : "";
+		// Get Location of User from UserService Component
+		$UserLocation	= $UserService->getLocation($_GET);
 		
-        echo CJSON::encode($user_id);
+        echo CJSON::encode($UserLocation);
     }
+	
+	public function doCustomRestPostSendLocation() {
+		$UserService 	= new UserService();
+		
+		$user_id	= isset($_POST['user_id']) ? $_POST['user_id'] : "";
+		$longtitude	= isset($_POST['longitude']) ? $_POST['longitude'] : "";
+		$latitude	= isset($_POST['latitude']) ? $_POST['latitude'] : "";
+		
+		$UserLocation	= $UserService->sendLocation($user_id, $longitude, $latitude);
+
+	}
 }
