@@ -36,7 +36,7 @@ return array(
     'components' => array(
         'edms' => array(
             'class' => 'EDMSConnection',
-            'dbName' => 'testdb',
+            'dbName' => 'apphack',
         //'server'           => 'mongodb://localhost:27017' //default
         //'options'  => array(.....); 
         ),
