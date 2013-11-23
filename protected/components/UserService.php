@@ -16,10 +16,21 @@ Class UserService extends CComponent {
         if (!array_key_exists('user_id', $get)) {
             return array('success' => false, 'message' => 'Invalid Parameters');
         }
-
-        $res = EDMSQuery::instance('user_location')->findOne(array('_id' => new MongoId($get['user_id'])));
-
-        return $res;
+			
+        $res = EDMSQuery::instance('user_location')->findOne(array('user_id' => $get['user_id']));
+		
+		if(!$res) {
+			return false;
+		}
+		
+		$data['data'] = array(
+			'user_id' => $res['user_id'],
+			'x' => $res['x'],
+			'y' => $res['y'],
+			'datetime' => $res['datetime'],
+		);
+		
+        return $data;
     }
 
     /*
@@ -30,14 +41,24 @@ Class UserService extends CComponent {
      * @return boolean true or false
      */
 
-    public function sendLocation($user_id, $latitude, $longitude) {
+    public function sendLocation($user_id, $x, $y) {
         $location = array(
             'user_id' => $user_id,
-            'longitude' => $longitude,
-            'latitude' => $latitude
+            'x' => $x,
+            'y' => $y,
+			'datetime'	=> time()
         );
 
-        $res = EDMSQuery::instance('services')->insert($location);
+        $res = EDMSQuery::instance('user_location')->upsert(array('user_id' => $user_id),$location);
+		
+		if($res)
+		{
+			return array('success' => true, 'message' => 'Valid Parameters');
+		}
+		else
+		{
+			return array('success' => false, 'message' => 'Invalid Parameters');
+		}
     }
 
     public function syncData() {

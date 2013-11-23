@@ -1,5 +1,5 @@
 <?php
-
+Yii::import('application.components.UserService');
 class UserController extends ERestController {
 
     /**
@@ -24,15 +24,26 @@ class UserController extends ERestController {
         $UserService = new UserService();
         // Get Location of User from UserService Component
         $UserLocation = $UserService->getLocation($_GET);
-        echo CJSON::encode($UserLocation);
+		
+		if(!$UserLocation) 
+		{
+			throw new CHttpException(404, 'Not Found');
+		}
+		else 
+		{
+			echo CJSON::encode($UserLocation);
+		}
     }
 
     public function doCustomRestPostSendLocation() {
         $UserService = new UserService();
         $user_id = isset($_POST['user_id']) ? $_POST['user_id'] : "";
-        $longitude = isset($_POST['longitude']) ? $_POST['longitude'] : "";
-        $latitude = isset($_POST['latitude']) ? $_POST['latitude'] : "";
-        $UserLocation = $UserService->sendLocation($user_id, $longitude, $latitude);
+        $x = isset($_POST['x']) ? $_POST['x'] : "";
+        $y = isset($_POST['y']) ? $_POST['y'] : "";
+		
+		$UserLocation = $UserService->sendLocation($user_id, $x, $y);
+		
+		echo CJSON::encode($UserLocation);
     }
     
     public function doCustomRestGetSync() {
