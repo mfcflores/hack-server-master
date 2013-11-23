@@ -242,7 +242,6 @@ class ERestController extends Controller {
      * Renders list of data assosiated with controller as json
      */
     public function actionRestList() {
-        die;
         $this->doRestList();
     }
 
@@ -488,7 +487,6 @@ class ERestController extends Controller {
 
     public function triggerCustomRestPut($method, $vars = array()) {
         $method = 'doCustomRestPut' . ucfirst($method);
-
         if (method_exists($this, $method)) {
             if (count($vars) > 0)
                 $this->$method($this->data(), $vars);

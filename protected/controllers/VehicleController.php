@@ -21,6 +21,8 @@ class VehicleController extends ERestController {
     }
 
     public function doCustomRestGetGetLocation() {
+        $collections = Yii::app()->edmsMongoDB()->listCollections();
         echo CJSON::encode(array('value' => 'test'));
     }
+
 }

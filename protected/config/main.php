@@ -14,6 +14,12 @@ return array(
         'application.models.*',
         'application.components.*',
         'ext.restfullyii.components.*',
+        'ext.directmongosuite.components.*',
+    ),
+    'behaviors' => array(
+        'edms' => array(
+            'class' => 'EDMSBehavior',
+        ),
     ),
     'modules' => array(
     // uncomment the following to enable the Gii tool
@@ -28,6 +34,27 @@ return array(
     ),
     // application components
     'components' => array(
+        'edms' => array(
+            'class' => 'EDMSConnection',
+            'dbName' => 'testdb',
+        //'server'           => 'mongodb://localhost:27017' //default
+        //'options'  => array(.....); 
+        ),
+        //manage the httpsession in the collection 'edms_httpsession'
+        'session' => array(
+            'class' => 'EDMSHttpSession',
+        //set this explizit if you want to switch servers/databases
+        //See below: Switching between servers and databases                        
+        //'connectionId'=>'edms',
+        //'dbName'=>'testdb',
+        ),
+        //manage the cache in the collection 'edms_cache'
+        'cache' => array(
+            'class' => 'EDMSCache',
+            //set to false after first use of the cache to increase performance
+            'ensureIndex' => true,
+        //Maybe set connectionId and dbName too: see Switching between servers and databases 
+        ),
         'user' => array(
             // enable cookie-based authentication
             'allowAutoLogin' => true,
@@ -41,10 +68,8 @@ return array(
                 'api/<controller:\w+>/<id:\w*>' => array('<controller>/restView', 'verb' => 'GET'),
                 'api/<controller:\w+>/<id:\w*>/<var:\w*>' => array('<controller>/restView', 'verb' => 'GET'),
                 'api/<controller:\w+>/<id:\w*>/<var:\w*>/<var2:\w*>' => array('<controller>/restView', 'verb' => 'GET'),
-                
                 array('<controller>/restCreate', 'pattern' => 'api/<controller:\w+>', 'verb' => 'POST'),
                 array('<controller>/restCreate', 'pattern' => 'api/<controller:\w+>/<id:\w+>', 'verb' => 'POST'),
-                
                 '<controller:\w+>/<id:\d+>' => '<controller>/view',
                 '<controller:\w+>/<action:\w+>/<id:\d+>' => '<controller>/<action>',
                 '<controller:\w+>/<action:\w+>' => '<controller>/<action>',
