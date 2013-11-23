@@ -22,14 +22,27 @@ class VehicleController extends ERestController {
         $this->render('index');
     }
 
-    public function doCustomRestGetToken() {
-        $id = new MongoId();
-        die($id);
-    }
-
     public function doCustomRestGetGetLocation() {
         $vService = new VehicleService();
         $res = $vService->getLocation($_GET);
         echo CJSON::encode($res);
     }
+
+	
+	public function doCustomRestPostSendLocation()
+	{
+		$vehicle_id = $_POST["vehicle_id"];
+		$x = $_POST["x"];
+		$y = $_POST["y"];
+        $vService = new VehicleService();
+        $res = $vService->getLocation($_GET);
+        echo CJSON::encode($res);
+    }
+
+	public function doCustomRestPostSetOperation()
+	{
+		$vService = new VehicleService();
+        $res = $vService->setOperation($_POST['v_id'],$_POST['operations']);
+        echo CJSON::encode($res);
+	}
 }
