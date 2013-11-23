@@ -16,6 +16,20 @@ class VehicleService extends CComponent {
         $res = EDMSQuery::instance('vehicle')->findOne(array('_id' => new MongoId($get['vehicle_id'])));
         return $res;
     }
-
+	
+	public function sendLocation($vehicle_id,$x,$y)
+	{
+		$res = EDMSQuery::instance('vehicle')->insert(array('vehicle_id' => $vehicle_id, 'x' => $x, 'y' => $y));
+		return $res;
+	}
+	
+	public function setOperation($v_id,$operations)
+	{
+		$vehicle = array(
+			'vehicle_id' => $v_id, 
+			'operations' => $operations);
+		$res = EDMSQuery::instance('services')->insert($vehicle);
+		return $res;
+	}
 }
 ?>

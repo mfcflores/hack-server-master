@@ -27,5 +27,22 @@ class VehicleController extends ERestController {
         $res = $vService->getLocation($_GET);
         echo CJSON::encode($res);
     }
-
+	
+	
+	public function doCustomRestPostSendLocation()
+	{
+		$vehicle_id = $_POST["vehicle_id"];
+		$x = $_POST["x"];
+		$y = $_POST["y"];
+		$vService = new VehicleService();
+		$res = $vService->sendLocation($vehicle_id,$x,$y);
+		echo CJSON::encode($res);
+	}
+	
+	public function doCustomRestPostSetOperation()
+	{
+		$vService = new VehicleService();
+        $res = $vService->setOperation($_POST['v_id'],$_POST['operations']);
+        echo CJSON::encode($res);
+	}
 }
